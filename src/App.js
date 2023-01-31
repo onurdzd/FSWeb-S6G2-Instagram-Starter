@@ -5,7 +5,7 @@
 */
 
 // State hook u import edin
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Gönderiler from "./bileşenler/Gönderiler/Gönderiler";
 import AramaÇubuğu from "./bileşenler/AramaÇubuğu/AramaÇubuğu";
@@ -20,7 +20,7 @@ const App = () => {
   // Arama çubuğunun çalışması için , arama kriterini tutacak başka bir state'e ihtiyacımız olacak.
 
   const [gonderiler, setGönderiler] = useState([...sahteVeri]);
-  const [arama, setArama] = useState();
+  const [arama, setArama] = useState("");
 
   const gonderiyiBegen = (gonderiID) => {
     /*
@@ -37,7 +37,7 @@ const App = () => {
 
     gonderiler.forEach((item) => {
       if (item.id === gonderiID) {
-        if (gonderiID == 1) {
+        if (gonderiID === 1) {
           setGönderiler([
             {
               id: item.id,
@@ -68,10 +68,24 @@ const App = () => {
     });
   };
 
+  const aramaFonk = () => {
+    if (arama.length > 0) {
+      setGönderiler([
+        ...gonderiler.filter((elem) => elem.username.includes(arama)),
+      ]);
+    } else {
+      setGönderiler([...sahteVeri]);
+    }
+  };
+
+  useEffect(() => {
+    aramaFonk();
+  }, [arama]);
+
   return (
     <div className="App">
       {/* AramaÇubuğu ve Gönderiler'i render etmesi için buraya ekleyin */}
-      <AramaÇubuğu />
+      <AramaÇubuğu arama={arama} setArama={setArama} />
       <Gönderiler gonderiyiBegen={gonderiyiBegen} gonderiler={gonderiler} />
       {/* Her bileşenin hangi proplara ihtiyaç duyduğunu kontrol edin, eğer ihtiyaç varsa ekleyin! */}
     </div>
