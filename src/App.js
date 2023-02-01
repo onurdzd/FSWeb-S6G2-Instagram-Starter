@@ -35,37 +35,41 @@ const App = () => {
         - aksi takdirde, sadece gönderi nesnesini değiştirmeden döndürün.
      */
 
-    gonderiler.forEach((item) => {
-      if (item.id === gonderiID) {
-        if (gonderiID === 1) {
-          setGönderiler([
-            {
-              id: item.id,
-              username: item.username,
-              thumbnailUrl: item.thumbnailUrl,
-              imageUrl: item.imageUrl,
-              likes: item.likes + 1,
-              timestamp: item.timestamp,
-              comments: item.comments,
-            },
-            ...gonderiler.filter((el) => el.id !== gonderiID),
-          ]);
-        } else {
-          setGönderiler([
-            ...gonderiler.filter((el) => el.id !== gonderiID),
-            {
-              id: item.id,
-              username: item.username,
-              thumbnailUrl: item.thumbnailUrl,
-              imageUrl: item.imageUrl,
-              likes: item.likes + 1,
-              timestamp: item.timestamp,
-              comments: item.comments,
-            },
-          ]);
-        }
-      }
-    });
+    gonderiler.find((item) => item.id === gonderiID).likes += 1;
+    setGönderiler([...gonderiler]);
+
+    //alternatif
+    // gonderiler.forEach((item) => {
+    //   if (item.id === gonderiID) {
+    //     if (gonderiID === 1) {
+    //       setGönderiler([
+    //         {
+    //           id: item.id,
+    //           username: item.username,
+    //           thumbnailUrl: item.thumbnailUrl,
+    //           imageUrl: item.imageUrl,
+    //           likes: item.likes + 1,
+    //           timestamp: item.timestamp,
+    //           comments: item.comments,
+    //         },
+    //         ...gonderiler.filter((el) => el.id !== gonderiID),
+    //       ]);
+    //     } else {
+    //       setGönderiler([
+    //         ...gonderiler.filter((el) => el.id !== gonderiID),
+    //         {
+    //           id: item.id,
+    //           username: item.username,
+    //           thumbnailUrl: item.thumbnailUrl,
+    //           imageUrl: item.imageUrl,
+    //           likes: item.likes + 1,
+    //           timestamp: item.timestamp,
+    //           comments: item.comments,
+    //         },
+    //       ]);
+    //     }
+    //   }
+    // });
   };
 
   const aramaFonk = () => {
